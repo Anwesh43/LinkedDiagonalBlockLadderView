@@ -32,13 +32,19 @@ fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 fun Canvas.drawDiagonalBlockLadder(scale : Float, w : Float, h : Float, paint : Paint) {
     val size : Float = (w / 2) / (blocks - 0.5f)
     val sf : Float = scale.sinify()
-    for (j in 0..(blocks - 1)) {
+    for (i in 0..1) {
         save()
-        translate(
-            w / 2 - size * j * (1 - sf.divideScale(blocks, parts)),
-            h - (size * (j + 1) * sf.divideScale(j, parts))
-        )
-        drawRect(RectF(-size / 2, -size / 2, size / 2, size/ 2), paint)
+        translate(w / 2, h)
+        scale(1f - 2 * i, 1f)
+        for (j in 0..(blocks - 1)) {
+            save()
+            translate(
+                -size * j * (1 - sf.divideScale(blocks, parts)),
+                size / 2 - (size * (j + 1) * sf.divideScale(j, parts))
+            )
+            drawRect(RectF(-size / 2, -size / 2, size / 2, size / 2), paint)
+            restore()
+        }
         restore()
     }
 }
