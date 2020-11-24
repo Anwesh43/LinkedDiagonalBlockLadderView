@@ -154,7 +154,7 @@ class DiagonalBlockLadderView(ctx : Context) : View(ctx) {
         }
     }
 
-    data class DiagonalBlackLadder(var i : Int) {
+    data class DiagonalBlockLadder(var i : Int) {
 
         private var curr : DBLNode = DBLNode(0)
         private var dir : Int = 1
@@ -174,6 +174,29 @@ class DiagonalBlockLadderView(ctx : Context) : View(ctx) {
 
         fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
+        }
+    }
+
+    data class Renderer(var view : DiagonalBlockLadderView) {
+
+        private val animator : Animator = Animator(view)
+        private val dbl : DiagonalBlockLadder = DiagonalBlockLadder(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            dbl.draw(canvas, paint)
+            animator.animate {
+                dbl.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            dbl.startUpdating {
+                animator.start()
+            }
         }
     }
 }
