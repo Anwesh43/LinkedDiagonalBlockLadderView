@@ -201,4 +201,13 @@ class DiagonalBlockLadderView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : DiagonalBlockLadderView {
+            val view : DiagonalBlockLadderView = DiagonalBlockLadderView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
